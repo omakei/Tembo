@@ -1,0 +1,11 @@
+{
+  "success": true,
+  "message": "Success",
+  "result": {
+    "accountNo": "015A8XX787600",
+    "accountName": "TEMBOPLUS COMPANY LIMITED",
+    "branchCode": "00003385",
+    "availableBalance": 2565138973.78,
+    "bookedBalance": 2565138973.78
+  }
+}

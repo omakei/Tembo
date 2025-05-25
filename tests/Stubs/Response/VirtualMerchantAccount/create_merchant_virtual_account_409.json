@@ -1,0 +1,5 @@
+{
+  "message": "DUPLICATE REFERENCE",
+  "error": "Conflict",
+  "statusCode": 409
+}

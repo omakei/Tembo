@@ -1,0 +1,8 @@
+{
+    "statusCode": 400,
+    "reason": "VALIDATION_ERROR",
+    "details": {
+        "walletId": "walletId is required",
+        "amount": "amount must be greater than zero"
+    }
+}

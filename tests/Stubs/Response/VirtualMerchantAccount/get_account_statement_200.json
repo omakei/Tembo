@@ -1,0 +1,41 @@
+{
+  "success": true,
+  "message": "Success",
+  "result": {
+    "accountNo": "015A8XX787600",
+    "statement": [
+      {
+        "id": "269fdb3e-2a2e-5b2b-934b-05d7071bbd91",
+        "transactionId": "18193b98f71c31NX",
+        "reference": "193b98f70a7deb12",
+        "transactionType": "L15",
+        "channel": "ESB",
+        "transactionDate": "2024-12-12T09:30:06.187+03:00",
+        "postingDate": "2024-12-12T09:30:06.191+03:00",
+        "valueDate": "2024-12-12T09:30:06.019+03:00",
+        "narration": "REF:193b98f70a7deb12 ESB TIPS ACCESS 035-9964989760 0124101115042 SELCOM PAYTECH LIMITED T",
+        "currency": "TZS",
+        "amountCredit": 3192979,
+        "amountDebit": 0,
+        "clearedBalance": 665131094.5,
+        "bookedBalance": 665131094.5
+      },
+      {
+        "id": "2db02d00-8a2e-572c-9e99-7cadbca994c0",
+        "transactionId": "16193b9d8c405uWS",
+        "reference": "FP3CDABEA5000888",
+        "transactionType": "E99",
+        "channel": "UXP",
+        "transactionDate": "2024-12-12T10:50:11.244+03:00",
+        "postingDate": "2024-12-12T10:50:11.244+03:00",
+        "valueDate": "2024-12-12T10:50:11.205+03:00",
+        "narration": "TMS BATCH GEN 1733989597301 FP3CDABEA5000888 1733989597301 TEMBOPLUS COMPANY LIMITED",
+        "currency": "TZS",
+        "amountCredit": 0,
+        "amountDebit": 10000,
+        "clearedBalance": 665121094.5,
+        "bookedBalance": 665121094.5
+      }
+    ]
+  }
+}

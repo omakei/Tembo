@@ -1,0 +1,10 @@
+{
+  "error": "VALIDATION_ERROR",
+  "message": "Invalid request parameters",
+  "details": [
+    {
+      "field": "partnerReference",
+      "message": "Invalid format"
+    }
+  ]
+}

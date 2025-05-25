@@ -1,0 +1,16 @@
+{
+  "status": "SUCCESS",
+  "reference": "GEPG:991040169765",
+  "description": "DAWASA\nName: ALEX JOHN KIRIA\nControl#: 991040169765\nTZS 83,981.50\nReference: 0278372593",
+  "meta": [
+    {
+      "name": "DAWASA",
+      "amount": "83981.50",
+      "institution": null,
+      "type": "PART",
+      "desc": "ALEX JOHN KIRIA - Malipo ya Bill Kwa 82024",
+      "chargeType": null,
+      "charge": null
+    }
+  ]
+}

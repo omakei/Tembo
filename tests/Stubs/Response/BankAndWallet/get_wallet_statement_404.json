@@ -1,0 +1,8 @@
+{
+    "statusCode": 400,
+    "reason": "VALIDATION_ERROR",
+    "details": {
+        "walletId": "walletId is required",
+        "startDate": "startDate cannot be greater that endDate"
+    }
+}

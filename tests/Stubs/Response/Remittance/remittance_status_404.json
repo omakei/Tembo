@@ -1,0 +1,5 @@
+{
+  "error": "NOT_FOUND",
+  "message": "Remittance with provided partner reference could not be found",
+  "requestId": "a1b2c3d4-e5f6-7890-1234-567890abcdef"
+}

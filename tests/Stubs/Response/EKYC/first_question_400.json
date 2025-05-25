@@ -1,0 +1,7 @@
+{
+    "statusCode": 400,
+    "reason": "VALIDATION_ERROR",
+    "details": {
+        "onboardId": "onboardId cannot be emtpy"
+    }
+}

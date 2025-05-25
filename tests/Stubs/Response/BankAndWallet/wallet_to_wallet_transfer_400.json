@@ -1,0 +1,8 @@
+{
+    "statusCode": 400,
+    "reason": "VALIDATION_ERROR",
+    "details": {
+        "narration": "narration cannot be empty",
+        "transactionDate": "transactionDate is invalid"
+    }
+}

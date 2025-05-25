@@ -1,0 +1,10 @@
+{
+  "error": "VALIDATION_ERROR",
+  "message": "Invalid request parameters",
+  "details": [
+    {
+      "field": "receiverAccount",
+      "message": "Invalid mobile number format"
+    }
+  ]
+}

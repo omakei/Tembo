@@ -1,0 +1,24 @@
+[
+  {
+        "accountNo": "6682002103",
+        "debitOrCredit": "CR",
+        "tranRefNo": "P50ZEXA2014301CI",
+        "narration": "CURRENT MONTH SALARY",
+        "txnDate": "2020-05-22",
+        "valueDate": "2020-05-22",
+        "amountCredited": 2232745.15,
+        "amountDebited": "",
+        "balance": 2232745.15
+      },
+      {
+        "accountNo": "668200980",
+        "debitOrCredit": "CR",
+        "tranRefNo": "P50ZEXA2014301CI",
+        "narration": "RENT PAYMENT FOR JUN 2022",
+        "txnDate": "2020-05-22",
+        "valueDate": "2020-05-22",
+        "amountCredited": 1950000.00,
+        "amountDebited": "",
+        "balance": 2132745.15
+      }
+]

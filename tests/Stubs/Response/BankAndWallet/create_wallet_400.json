@@ -1,0 +1,9 @@
+{
+    "statusCode": 400,
+    "reason": "VALIDATION_ERROR",
+    "details": {
+        "firstName": "firstName is required",
+        "dateOfBirth": "Invalid date",
+        "address.city": "address.city cannot be empty"
+    }
+}

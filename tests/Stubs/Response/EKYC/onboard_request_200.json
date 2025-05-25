@@ -1,0 +1,19 @@
+{
+    "id": "lS2Ju1biJuug",
+    "applicationId": "bFo7zV0eG8rz",
+    "nin": "XXXXXXXXXXXXXXX",
+    "cardIssueDate": "2010-01-19T00:00:00.000Z",
+    "cardExpiryDate": "2024-06-20T00:00:00.000Z",
+    "phoneNumber": "2557183987655",
+    "email": "john.doe@example.com",
+    "status": "Created",
+    "kycCompleted": 0,
+    "accountNo": null,
+    "accountName": null,
+    "customerNo": null,
+    "kyc": null,
+    "partnerReference": null,
+    "requestId": "17f36ae9-c9ef-4908-b151-50d3aad08b7b",
+    "createdAt": "2024-08-02T08:05:52.000Z",
+    "updatedAt": "2024-08-02T08:05:52.000Z"
+  }

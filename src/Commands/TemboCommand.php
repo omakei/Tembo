@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace Omakei\Tembo\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class TemboCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'tembo';
 
     public $description = 'My command';
 

@@ -1,0 +1,8 @@
+{
+  "statusCode": 400,
+  "message": "Validation failed",
+  "error": "Validation Error",
+  "details": {
+    "accountNo": "\"accountNo\" is required"
+  }
+}

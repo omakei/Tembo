@@ -1,0 +1,1 @@
+No response body is returned for 404 errors when the account is not found.
