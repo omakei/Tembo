@@ -22,7 +22,7 @@ trait MerchantVirtualAccountsValidation
 
         if ($validator->fails()) {
             $errors = json_encode($validator->errors()->all());
-        
+
             throw new Exception($errors);
         }
     }

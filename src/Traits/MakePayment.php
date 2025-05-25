@@ -72,11 +72,11 @@ trait MakePayment
                     throw new Exception('There is a problem with payment processing server.');
                 }
 
-                if($response->notFound()) {
+                if ($response->notFound()) {
                     throw new NotFoundException($response);
                 }
 
-                if($response->status() === 502) {
+                if ($response->status() === 502) {
                     throw new BadGatewayException($response);
                 }
 
@@ -152,11 +152,11 @@ trait MakePayment
                     throw new Exception('There is a problem with payment processing server.');
                 }
 
-                if($response->notFound()) {
+                if ($response->notFound()) {
                     throw new NotFoundException($response);
                 }
 
-                if($response->status() === 502) {
+                if ($response->status() === 502) {
                     throw new BadGatewayException($response);
                 }
             });
@@ -212,11 +212,11 @@ trait MakePayment
                     throw new Exception('There is a problem with payment processing server.');
                 }
 
-                if($response->notFound()) {
+                if ($response->notFound()) {
                     throw new NotFoundException($response);
                 }
 
-                if($response->status() === 502) {
+                if ($response->status() === 502) {
                     throw new BadGatewayException($response);
                 }
             });

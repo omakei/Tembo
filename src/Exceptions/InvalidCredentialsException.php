@@ -2,9 +2,4 @@
 
 namespace Omakei\Tembo\Exceptions;
 
-
-
-class InvalidCredentialsException extends BaseRequestException
-{
-
-}
+class InvalidCredentialsException extends BaseRequestException {}

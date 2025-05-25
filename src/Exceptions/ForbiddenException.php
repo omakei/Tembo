@@ -2,9 +2,4 @@
 
 namespace Omakei\Tembo\Exceptions;
 
-
-
-class ForbiddenException extends BaseRequestException
-{
-
-}
+class ForbiddenException extends BaseRequestException {}

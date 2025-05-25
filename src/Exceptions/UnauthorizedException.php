@@ -2,9 +2,4 @@
 
 namespace Omakei\Tembo\Exceptions;
 
-
-
-class UnauthorizedException extends BaseRequestException
-{
-
-}
+class UnauthorizedException extends BaseRequestException {}

@@ -42,7 +42,7 @@ trait EKYC
      *   'partnerReference': null,
      *   'requestId': string,
      *   'createdAt': string ,
-     *   'updatedAt': string 
+     *   'updatedAt': string
      * }| string | array {
      *   'message': string,
      *   'error': string,
@@ -73,11 +73,11 @@ trait EKYC
                     throw new Exception('There is a problem with payment processing server.');
                 }
 
-                if($response->notFound()) {
+                if ($response->notFound()) {
                     throw new NotFoundException($response);
                 }
 
-                if($response->status() === 502) {
+                if ($response->status() === 502) {
                     throw new BadGatewayException($response);
                 }
 
@@ -126,11 +126,11 @@ trait EKYC
                     throw new Exception('There is a problem with payment processing server.');
                 }
 
-                if($response->notFound()) {
+                if ($response->notFound()) {
                     throw new NotFoundException($response);
                 }
 
-                if($response->status() === 502) {
+                if ($response->status() === 502) {
                     throw new BadGatewayException($response);
                 }
 
@@ -148,14 +148,14 @@ trait EKYC
      *                       'answer': string,
      *                       }
      * @return array {
-     *   'id': string,
-     *   'code': string,
-     *   'result': {
-     *       'questionCode': string,
-     *       'nin': string,
-     *       'questionEnglish': string,
-     *       'questionSwahili': string,
-     *   }
+     *               'id': string,
+     *               'code': string,
+     *               'result': {
+     *               'questionCode': string,
+     *               'nin': string,
+     *               'questionEnglish': string,
+     *               'questionSwahili': string,
+     *               }
      *
      * }| string | array{
      *   'message': string,
@@ -171,7 +171,7 @@ trait EKYC
 
         $response = $this->sendRequestUsingBearerToken('post', '/onboard/v1/onboard/verify', $data)
             ->onError(function (Response $response) {
-                 if ($response->badRequest()) {
+                if ($response->badRequest()) {
                     throw new BadRequestException($response);
                 }
 
@@ -187,14 +187,14 @@ trait EKYC
                     throw new Exception('There is a problem with payment processing server.');
                 }
 
-                if($response->notFound()) {
+                if ($response->notFound()) {
                     throw new NotFoundException($response);
                 }
 
-                if($response->status() === 502) {
+                if ($response->status() === 502) {
                     throw new BadGatewayException($response);
                 }
-                
+
             });
 
         return $response->json();

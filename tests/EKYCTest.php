@@ -1,16 +1,14 @@
 <?php
 
-use Omakei\Tembo\Tembo;
 use Illuminate\Support\Facades\Http;
 use Omakei\Tembo\Exceptions\BadRequestException;
-use Omakei\Tembo\Exceptions\ConflictException;
-use Omakei\Tembo\Exceptions\NotFoundException;
 use Omakei\Tembo\Exceptions\UnauthorizedException;
+use Omakei\Tembo\Tembo;
 
 beforeEach(function () {
     config(['tembo.accountId' => '123456789']);
     config(['tembo.secretKey' => '123456789']);
-    
+
 });
 
 it('can successful initiate onboard request', function () {
@@ -24,14 +22,14 @@ it('can successful initiate onboard request', function () {
         Tembo::SANDBOX_BASE_URL.'/onboard/v1/onboard' => Http::response($stub, 200),
     ]);
 
-    $tembo = new Tembo();
+    $tembo = new Tembo;
 
     $data = $tembo->initiateOnboardRequest([
-    "nin" => "XXXXXXXXXXXXX",
-	"phoneNumber" => "2557183987655",
-	"email" => "john.doe@example.com",
-	"cardIssueDate" => "2010-01-19",
-	"cardExpiryDate" => "2024-06-20"
+        'nin' => 'XXXXXXXXXXXXX',
+        'phoneNumber' => '2557183987655',
+        'email' => 'john.doe@example.com',
+        'cardIssueDate' => '2010-01-19',
+        'cardExpiryDate' => '2024-06-20',
     ]);
 
     $this->assertEquals($data, $stub);
@@ -39,12 +37,12 @@ it('can successful initiate onboard request', function () {
 
 it('can successful validate initiate onboard request', function (array $data, string $validation) {
 
-    $tembo = new Tembo();
+    $tembo = new Tembo;
 
-    expect(fn() => $tembo->initiateOnboardRequest($data))->toThrow( new Exception($validation));
+    expect(fn () => $tembo->initiateOnboardRequest($data))->toThrow(new Exception($validation));
 
 })->with([
-    ['data' => [], 'validation' =>'["The nin field is required.","The phone number field is required.","The email field is required.","The card issue date field is required.","The card expiry date field is required."]'],
+    ['data' => [], 'validation' => '["The nin field is required.","The phone number field is required.","The email field is required.","The card issue date field is required.","The card expiry date field is required."]'],
 ]);
 
 it('can successful retrieve first question', function () {
@@ -58,10 +56,10 @@ it('can successful retrieve first question', function () {
         Tembo::SANDBOX_BASE_URL.'/onboard/v1/onboard/verify' => Http::response($stub, 200),
     ]);
 
-    $tembo = new Tembo();
+    $tembo = new Tembo;
 
     $data = $tembo->retrieveFirstQuestion([
-    "onboardId" => "1JpXezddTbXH"
+        'onboardId' => '1JpXezddTbXH',
     ]);
 
     $this->assertEquals($data, $stub);
@@ -69,16 +67,16 @@ it('can successful retrieve first question', function () {
 
 it('can successful validate retrieve first question', function (array $data, string $validation) {
 
-    $tembo = new Tembo();
+    $tembo = new Tembo;
 
-    expect(fn() => $tembo->retrieveFirstQuestion($data))->toThrow( new Exception($validation));
+    expect(fn () => $tembo->retrieveFirstQuestion($data))->toThrow(new Exception($validation));
 
 })->with([
-    ['data' => [], 'validation' =>'["The onboard id field is required."]'],
+    ['data' => [], 'validation' => '["The onboard id field is required."]'],
 ]);
 
 it('can throw error during retrieve first question', function (string $stubFile, string $exceptionClass, int $statusCode) {
-  
+
     $stub = json_decode(
         file_get_contents(__DIR__.'/Stubs/Response/EKYC/'.$stubFile),
         true
@@ -89,13 +87,13 @@ it('can throw error during retrieve first question', function (string $stubFile,
         Tembo::SANDBOX_BASE_URL.'/onboard/v1/onboard/verify' => Http::response($stub, $statusCode),
     ]);
 
-    $tembo = new Tembo();
+    $tembo = new Tembo;
 
-    expect(fn() => $tembo->retrieveFirstQuestion([
-    "onboardId" => "1JpXezddTbXH"
+    expect(fn () => $tembo->retrieveFirstQuestion([
+        'onboardId' => '1JpXezddTbXH',
     ]))->toThrow($exceptionClass);
- 
-})->with([['first_question_401.json', UnauthorizedException::class, 401],['first_question_400.json', BadRequestException::class, 400],
+
+})->with([['first_question_401.json', UnauthorizedException::class, 401], ['first_question_400.json', BadRequestException::class, 400],
 ]);
 
 it('can successful reply to question', function () {
@@ -109,12 +107,12 @@ it('can successful reply to question', function () {
         Tembo::SANDBOX_BASE_URL.'/onboard/v1/onboard/verify' => Http::response($stub, 200),
     ]);
 
-    $tembo = new Tembo();
+    $tembo = new Tembo;
 
     $data = $tembo->replyToAQuestion([
-        "onboardId" => "lS2Ju1biJuug",
-        "questionCode" => "106",
-        "answer" => "1997"
+        'onboardId' => 'lS2Ju1biJuug',
+        'questionCode' => '106',
+        'answer' => '1997',
     ]);
 
     $this->assertEquals($data, $stub);
@@ -122,16 +120,16 @@ it('can successful reply to question', function () {
 
 it('can successful validate reply to question', function (array $data, string $validation) {
 
-    $tembo = new Tembo();
+    $tembo = new Tembo;
 
-    expect(fn() => $tembo->replyToAQuestion($data))->toThrow( new Exception($validation));
+    expect(fn () => $tembo->replyToAQuestion($data))->toThrow(new Exception($validation));
 
 })->with([
-    ['data' => [], 'validation' =>'["The onboard id field is required.","The question code field is required.","The answer field is required."]'],
+    ['data' => [], 'validation' => '["The onboard id field is required.","The question code field is required.","The answer field is required."]'],
 ]);
 
 it('can throw error during reply to question', function (string $stubFile, string $exceptionClass, int $statusCode) {
-  
+
     $stub = json_decode(
         file_get_contents(__DIR__.'/Stubs/Response/EKYC/'.$stubFile),
         true
@@ -142,13 +140,13 @@ it('can throw error during reply to question', function (string $stubFile, strin
         Tembo::SANDBOX_BASE_URL.'/onboard/v1/onboard/verify' => Http::response($stub, $statusCode),
     ]);
 
-    $tembo = new Tembo();
+    $tembo = new Tembo;
 
-    expect(fn() => $tembo->replyToAQuestion([
-   "onboardId" => "lS2Ju1biJuug",
-	"questionCode" => "106",
-	"answer" => "1997"
+    expect(fn () => $tembo->replyToAQuestion([
+        'onboardId' => 'lS2Ju1biJuug',
+        'questionCode' => '106',
+        'answer' => '1997',
     ]))->toThrow($exceptionClass);
- 
-})->with([['reply_question_401.json', UnauthorizedException::class, 401],['reply_question_400.json', BadRequestException::class, 400],
+
+})->with([['reply_question_401.json', UnauthorizedException::class, 401], ['reply_question_400.json', BadRequestException::class, 400],
 ]);

@@ -54,5 +54,4 @@ trait EKYCValidation
             throw new Exception($errors);
         }
     }
-
 }

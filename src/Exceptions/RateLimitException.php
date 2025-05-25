@@ -2,9 +2,4 @@
 
 namespace Omakei\Tembo\Exceptions;
 
-
-
-class RateLimitException extends BaseRequestException
-{
-
-}
+class RateLimitException extends BaseRequestException {}

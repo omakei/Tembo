@@ -21,9 +21,7 @@ class Tembo
 
     const BASE_URL = 'https://sandbox.temboplus.com';
 
-
     private string $baseUrl;
-
 
     /**
      * @throws Exception
