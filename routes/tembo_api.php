@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Omakei\Tembo\Events\RemittanceCallback;
 use Omakei\Tembo\Events\TemboCallback;
@@ -10,31 +11,43 @@ use Omakei\Tembo\Events\WalletToMobileCallback;
 use Omakei\Tembo\Helpers;
 
 Route::post('/api/v1/merchant/callback', function (Request $request) {
-    // Validate the incoming request
-    $request->validate([
-        'accountNo' => ['required', 'string'],
-        'payerName' => ['required', 'string'],
-        'id' => ['required', 'string'],
-        'transactionId' => ['required', 'string'],
-        'reference' => ['required', 'string'],
-        'transactionType' => ['required', 'string'],
-        'channel' => ['required', 'string'],
-        'transactionDate' => ['required', 'date'],
-        'postingDate' => ['required', 'date'],
-        'valueDate' => ['required', 'date'],
-        'currency' => ['required', 'string', Rule::in(['TZS', 'USD', 'KES', 'UGS', 'RWF'])],
-        'narration' => ['required', 'string'],
-        'amountCredit' => ['required', 'float'],
-        'amountDebit' => ['required', 'float'],
-        'clearedBalance' => ['required', 'float'],
-        'bookedBalance' => ['required', 'float'],
+    logger($request->all(), [
+        'message' => 'Tembo Merchant Callback',
     ]);
+    // Validate the incoming request
+    $validator = Validator::make($request->all(), 
+        [
+            'accountNo' => ['required', 'string'],
+            'payerName' => ['required', 'string'],
+            'id' => ['required', 'string'],
+            'transactionId' => ['required', 'string'],
+            'reference' => ['required', 'string'],
+            'transactionType' => ['required', 'string'],
+            'channel' => ['required', 'string'],
+            'transactionDate' => ['required', 'date'],
+            'postingDate' => ['required', 'date'],
+            'valueDate' => ['required', 'date'],
+            'currency' => ['required', 'string', Rule::in(['TZS', 'USD', 'KES', 'UGS', 'RWF'])],
+            'narration' => ['required', 'string'],
+            'amountCredit' => ['required', 'numeric'],
+            'amountDebit' => ['required', 'numeric'],
+            'clearedBalance' => ['required', 'numeric'],
+            'bookedBalance' => ['required', 'numeric'],
+        ]);
+        
+    if ($validator->fails()) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Validation failed',
+            'errors' => $validator->errors(),
+        ], 422);
+    }
 
     $result = Helpers::verifySignature(
-        config('tembo.secretKey'),
-        $request->header('x-tembo-timestamp'),
+        base64_encode(config('tembo.secretKey')),
+        $request->header('x-request-timestamp'),
         $request->all(),
-        $request->header('x-tembo-signature')
+        $request->header('x-request-signature')
     );
 
     if (! $result) {

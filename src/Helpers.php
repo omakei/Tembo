@@ -64,6 +64,8 @@ class Helpers
 
         // Compute the HMAC using SHA-256 and base64-encode the result
         $computedSignature = base64_encode(hash_hmac('sha256', $concatenatedString, $secret, true));
+        // dd($computedSignature, hash_equals($computedSignature, $receivedSignature));
+        logger($computedSignature, ['secret' => $secretBase64, 'timestamp' => $timestamp, 'body' => $body, 'receivedSignature' => $receivedSignature]);
 
         // Compare the computed signature with the one received
         return hash_equals($computedSignature, $receivedSignature);
