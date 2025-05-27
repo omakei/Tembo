@@ -74,9 +74,11 @@ trait EKYC
                 }
 
                 if ($response->notFound()) {
+                if ($response->notFound()) {
                     throw new NotFoundException($response);
                 }
 
+                if ($response->status() === 502) {
                 if ($response->status() === 502) {
                     throw new BadGatewayException($response);
                 }
@@ -127,9 +129,11 @@ trait EKYC
                 }
 
                 if ($response->notFound()) {
+                if ($response->notFound()) {
                     throw new NotFoundException($response);
                 }
 
+                if ($response->status() === 502) {
                 if ($response->status() === 502) {
                     throw new BadGatewayException($response);
                 }
@@ -156,6 +160,14 @@ trait EKYC
      *               'questionEnglish': string,
      *               'questionSwahili': string,
      *               }
+     *               'id': string,
+     *               'code': string,
+     *               'result': {
+     *               'questionCode': string,
+     *               'nin': string,
+     *               'questionEnglish': string,
+     *               'questionSwahili': string,
+     *               }
      *
      * } | array{
      *   'message': string,
@@ -171,6 +183,7 @@ trait EKYC
 
         $response = $this->sendRequestUsingBearerToken('post', '/onboard/v1/onboard/verify', $data)
             ->onError(function (Response $response) {
+                if ($response->badRequest()) {
                 if ($response->badRequest()) {
                     throw new BadRequestException($response);
                 }
@@ -188,12 +201,15 @@ trait EKYC
                 }
 
                 if ($response->notFound()) {
+                if ($response->notFound()) {
                     throw new NotFoundException($response);
                 }
 
                 if ($response->status() === 502) {
+                if ($response->status() === 502) {
                     throw new BadGatewayException($response);
                 }
+
 
             });
 
