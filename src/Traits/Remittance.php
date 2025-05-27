@@ -10,7 +10,6 @@ use Omakei\Tembo\Exceptions\ConflictException;
 use Omakei\Tembo\Exceptions\ForbiddenException;
 use Omakei\Tembo\Exceptions\NotFoundException;
 use Omakei\Tembo\Exceptions\RateLimitException;
-use Omakei\Tembo\Exceptions\RateLimitException;
 use Omakei\Tembo\Exceptions\UnauthorizedException;
 use Omakei\Tembo\Traits\Validation\RemittanceValidation;
 
@@ -105,11 +104,9 @@ trait Remittance
                 }
 
                 if ($response->notFound()) {
-                if ($response->notFound()) {
                     throw new NotFoundException($response);
                 }
 
-                if ($response->status() === 502) {
                 if ($response->status() === 502) {
                     throw new BadGatewayException($response);
                 }
@@ -184,11 +181,9 @@ trait Remittance
                 }
 
                 if ($response->notFound()) {
-                if ($response->notFound()) {
                     throw new NotFoundException($response);
                 }
 
-                if ($response->status() === 502) {
                 if ($response->status() === 502) {
                     throw new BadGatewayException($response);
                 }

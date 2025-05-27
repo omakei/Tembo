@@ -11,22 +11,15 @@ class BaseRequestException extends \Exception
 {
     public $requestId = '';
 
-    public $requestId = '';
-
     public $reason;
-
 
     public $error;
 
-
     public $details;
-
 
     public $statusCode;
 
-
     public $message;
-
 
     public $response;
 
@@ -42,30 +35,18 @@ class BaseRequestException extends \Exception
 
         $responseJson = $response->json();
 
-        $responseJson = $response->json();
-
-        if (! empty($responseJson['statusCode'])) {
-            $this->statusCode = $responseJson['statusCode'];
         if (! empty($responseJson['statusCode'])) {
             $this->statusCode = $responseJson['statusCode'];
         }
         if (! empty($responseJson['reason'])) {
             $this->reason = $responseJson['reason'];
-        if (! empty($responseJson['reason'])) {
-            $this->reason = $responseJson['reason'];
         }
-        if (! empty($responseJson['details'])) {
-            $this->details = $responseJson['details'];
         if (! empty($responseJson['details'])) {
             $this->details = $responseJson['details'];
         }
         if (! empty($responseJson['error'])) {
             $this->error = $responseJson['error'];
-        if (! empty($responseJson['error'])) {
-            $this->error = $responseJson['error'];
         }
-        if (! empty($responseJson['message'])) {
-            $this->message = $responseJson['message'];
         if (! empty($responseJson['message'])) {
             $this->message = $responseJson['message'];
         }
@@ -85,14 +66,10 @@ class BaseRequestException extends \Exception
             $this->message = $responseBody;
         } catch (\Exception $e) {
             $this->message = '';
-            $this->message = '';
         }
 
-        if (\array_key_exists('x-request-id', $response->headers())) {
-            $this->requestId = $response->headers['x-request-id'];
         if (\array_key_exists('x-request-id', $response->headers())) {
             $this->requestId = $response->headers['x-request-id'];
         }
     }
 }
-
