@@ -2,9 +2,4 @@
 
 namespace Omakei\Tembo\Exceptions;
 
-
-
-class ConflictException extends BaseRequestException
-{
-
-}
+class ConflictException extends BaseRequestException {}

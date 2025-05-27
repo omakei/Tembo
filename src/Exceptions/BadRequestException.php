@@ -2,9 +2,4 @@
 
 namespace Omakei\Tembo\Exceptions;
 
-
-
-class BadRequestException extends BaseRequestException
-{
-
-}
+class BadRequestException extends BaseRequestException {}

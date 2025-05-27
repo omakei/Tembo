@@ -5,6 +5,7 @@ use Omakei\Tembo\Exceptions\BadGatewayException;
 use Omakei\Tembo\Exceptions\BadRequestException;
 use Omakei\Tembo\Exceptions\NotFoundException;
 use Omakei\Tembo\Exceptions\UnauthorizedException;
+use Omakei\Tembo\Facades\Tembo as TemboFacade;
 use Omakei\Tembo\Tembo;
 
 beforeEach(function () {
@@ -24,9 +25,7 @@ it('can successful create wallet', function () {
         Tembo::SANDBOX_BASE_URL.'/tembo/v1/wallet' => Http::response($stub, 200),
     ]);
 
-    $tembo = new Tembo;
-
-    $data = $tembo->createWallet([
+    $data = TemboFacade::createWallet([
         'firstName' => 'Manase',
         'middleName' => 'James',
         'lastName' => 'Mwina',
@@ -50,18 +49,16 @@ it('can successful create wallet', function () {
     ]);
 
     $this->assertEquals($data, $stub);
-});
+})->group('facade');
 
 it('can successful validate create wallet', function (array $data, string $validation) {
 
-    $tembo = new Tembo;
-
-    expect(fn () => $tembo->createWallet($data))->toThrow(new Exception($validation));
+    expect(fn () => TemboFacade::createWallet($data))->toThrow(new Exception($validation));
 
 })->with([
     ['data' => [], 'validation' => '["The first name field is required.","The middle name field is required.","The last name field is required.","The date of birth field is required.","The gender field is required.","The identity info.id type field is required.","The identity info.id number field is required.","The identity info.issue date field is required.","The identity info.expiry date field is required.","The address.street field is required.","The address.city field is required.","The address.postal code field is required.","The mobile no field is required.","The email field is required.","The currency code field is required.","The external customer ref field is required."]'],
 
-]);
+])->group('facade');
 
 it('can throw error during create wallet', function (string $stubFile, string $exceptionClass, int $statusCode) {
 
@@ -75,9 +72,7 @@ it('can throw error during create wallet', function (string $stubFile, string $e
         Tembo::SANDBOX_BASE_URL.'/tembo/v1/wallet' => Http::response($stub, $statusCode),
     ]);
 
-    $tembo = new Tembo;
-
-    expect(fn () => $tembo->createWallet([
+    expect(fn () => TemboFacade::createWallet([
         'firstName' => 'Manase',
         'middleName' => 'James',
         'lastName' => 'Mwina',
@@ -103,7 +98,7 @@ it('can throw error during create wallet', function (string $stubFile, string $e
 })->with([['create_wallet_400.json', BadRequestException::class, 400],
     ['create_wallet_401.json', UnauthorizedException::class, 401],
     ['create_wallet_502.txt', BadGatewayException::class, 502],
-]);
+])->group('facade');
 
 it('can successful deposit funds', function () {
     $stub = json_decode(
@@ -116,9 +111,7 @@ it('can successful deposit funds', function () {
         Tembo::SANDBOX_BASE_URL.'/tembo/v1/transaction/deposit' => Http::response($stub, 200),
     ]);
 
-    $tembo = new Tembo;
-
-    $data = $tembo->depositFunds([
+    $data = TemboFacade::depositFunds([
         'amount' => 1000,
         'accountNo' => '70089773',
         'externalRefNo' => 'TEMBO-CUSTOMER-003',
@@ -127,18 +120,16 @@ it('can successful deposit funds', function () {
     ]);
 
     $this->assertEquals($data, $stub);
-});
+})->group('facade');
 
 it('can successful validate deposit funds', function (array $data, string $validation) {
 
-    $tembo = new Tembo;
-
-    expect(fn () => $tembo->depositFunds($data))->toThrow(new Exception($validation));
+    expect(fn () => TemboFacade::depositFunds($data))->toThrow(new Exception($validation));
 
 })->with([
     ['data' => [], 'validation' => '["The amount field is required.","The account no field is required.","The external ref no field is required.","The narration field is required.","The transaction date field is required."]'],
 
-]);
+])->group('facade');
 
 it('can throw error during deposit funds', function (string $stubFile, string $exceptionClass, int $statusCode) {
 
@@ -152,9 +143,7 @@ it('can throw error during deposit funds', function (string $stubFile, string $e
         Tembo::SANDBOX_BASE_URL.'/tembo/v1/transaction/deposit' => Http::response($stub, $statusCode),
     ]);
 
-    $tembo = new Tembo;
-
-    expect(fn () => $tembo->depositFunds([
+    expect(fn () => TemboFacade::depositFunds([
         'amount' => 1000,
         'accountNo' => '70089773',
         'externalRefNo' => 'TEMBO-CUSTOMER-003',
@@ -164,7 +153,7 @@ it('can throw error during deposit funds', function (string $stubFile, string $e
 
 })->with([['deposit_funds_400.json', BadRequestException::class, 400],
     ['deposit_funds_401.json', UnauthorizedException::class, 401],
-]);
+])->group('facade');
 
 it('can successful withdraw funds', function () {
     $stub = json_decode(
@@ -177,9 +166,7 @@ it('can successful withdraw funds', function () {
         Tembo::SANDBOX_BASE_URL.'/tembo/v1/transaction/withdraw' => Http::response($stub, 200),
     ]);
 
-    $tembo = new Tembo;
-
-    $data = $tembo->withdrawFunds([
+    $data = TemboFacade::withdrawFunds([
         'amount' => 1000,
         'accountNo' => '70089773',
         'externalRefNo' => 'TEMBO-CUSTOMER-003',
@@ -188,18 +175,16 @@ it('can successful withdraw funds', function () {
     ]);
 
     $this->assertEquals($data, $stub);
-});
+})->group('facade');
 
 it('can successful validate withdraw funds', function (array $data, string $validation) {
 
-    $tembo = new Tembo;
-
-    expect(fn () => $tembo->withdrawFunds($data))->toThrow(new Exception($validation));
+    expect(fn () => TemboFacade::withdrawFunds($data))->toThrow(new Exception($validation));
 
 })->with([
     ['data' => [], 'validation' => '["The amount field is required.","The account no field is required.","The external ref no field is required.","The narration field is required.","The transaction date field is required."]'],
 
-]);
+])->group('facade');
 
 it('can throw error during withdraw funds', function (string $stubFile, string $exceptionClass, int $statusCode) {
 
@@ -213,9 +198,7 @@ it('can throw error during withdraw funds', function (string $stubFile, string $
         Tembo::SANDBOX_BASE_URL.'/tembo/v1/transaction/withdraw' => Http::response($stub, $statusCode),
     ]);
 
-    $tembo = new Tembo;
-
-    expect(fn () => $tembo->withdrawFunds([
+    expect(fn () => TemboFacade::withdrawFunds([
         'amount' => 1000,
         'accountNo' => '70089773',
         'externalRefNo' => 'TEMBO-CUSTOMER-003',
@@ -225,7 +208,7 @@ it('can throw error during withdraw funds', function (string $stubFile, string $
 
 })->with([['withdraw_funds_400.json', BadRequestException::class, 400],
     ['withdraw_funds_401.json', UnauthorizedException::class, 401],
-]);
+])->group('facade');
 
 it('can successful do wallet to wallet transfer', function () {
     $stub = json_decode(
@@ -238,9 +221,7 @@ it('can successful do wallet to wallet transfer', function () {
         Tembo::SANDBOX_BASE_URL.'/tembo/v1/transaction/transfer' => Http::response($stub, 200),
     ]);
 
-    $tembo = new Tembo;
-
-    $data = $tembo->walletTransfer([
+    $data = TemboFacade::walletTransfer([
         'amount' => 10000,
         'fromAccountNo' => '70089773',
         'toAccountNo' => '70089004',
@@ -250,18 +231,16 @@ it('can successful do wallet to wallet transfer', function () {
     ]);
 
     $this->assertEquals($data, $stub);
-});
+})->group('facade');
 
 it('can successful validate wallet to wallet transfer', function (array $data, string $validation) {
 
-    $tembo = new Tembo;
-
-    expect(fn () => $tembo->walletTransfer($data))->toThrow(new Exception($validation));
+    expect(fn () => TemboFacade::walletTransfer($data))->toThrow(new Exception($validation));
 
 })->with([
     ['data' => [], 'validation' => '["The amount field is required.","The from account no field is required.","The to account no field is required.","The external ref no field is required.","The narration field is required.","The transaction date field is required."]'],
 
-]);
+])->group('facade');
 
 it('can throw error during wallet to wallet transfer', function (string $stubFile, string $exceptionClass, int $statusCode) {
 
@@ -275,9 +254,7 @@ it('can throw error during wallet to wallet transfer', function (string $stubFil
         Tembo::SANDBOX_BASE_URL.'/tembo/v1/transaction/transfer' => Http::response($stub, $statusCode),
     ]);
 
-    $tembo = new Tembo;
-
-    expect(fn () => $tembo->walletTransfer([
+    expect(fn () => TemboFacade::walletTransfer([
         'amount' => 10000,
         'fromAccountNo' => '70089773',
         'toAccountNo' => '70089004',
@@ -288,7 +265,7 @@ it('can throw error during wallet to wallet transfer', function (string $stubFil
 
 })->with([['wallet_to_wallet_transfer_400.json', BadRequestException::class, 400],
     ['wallet_to_wallet_transfer_401.json', UnauthorizedException::class, 401],
-]);
+])->group('facade');
 
 it('can successful check wallet balance', function () {
     $stub = json_decode(
@@ -301,25 +278,21 @@ it('can successful check wallet balance', function () {
         Tembo::SANDBOX_BASE_URL.'/tembo/v1/wallet/balance' => Http::response($stub, 200),
     ]);
 
-    $tembo = new Tembo;
-
-    $data = $tembo->walletBalance([
+    $data = TemboFacade::walletBalance([
         'accountNo' => '70089773',
     ]);
 
     $this->assertEquals($data, $stub);
-});
+})->group('facade');
 
 it('can successful validate check wallet balance', function (array $data, string $validation) {
 
-    $tembo = new Tembo;
-
-    expect(fn () => $tembo->walletBalance($data))->toThrow(new Exception($validation));
+    expect(fn () => TemboFacade::walletBalance($data))->toThrow(new Exception($validation));
 
 })->with([
     ['data' => [], 'validation' => '["The account no field is required."]'],
 
-]);
+])->group('facade');
 
 it('can throw error during check wallet balance', function (string $stubFile, string $exceptionClass, int $statusCode) {
 
@@ -333,15 +306,13 @@ it('can throw error during check wallet balance', function (string $stubFile, st
         Tembo::SANDBOX_BASE_URL.'/tembo/v1/wallet/balance' => Http::response($stub, $statusCode),
     ]);
 
-    $tembo = new Tembo;
-
-    expect(fn () => $tembo->walletBalance([
+    expect(fn () => TemboFacade::walletBalance([
         'accountNo' => '70089773',
     ]))->toThrow($exceptionClass);
 
 })->with([['wallet_balance_404.json', NotFoundException::class, 404],
     ['wallet_balance_400.json', BadRequestException::class, 400],
-]);
+])->group('facade');
 
 it('can successful get wallet statement', function () {
     $stub = json_decode(
@@ -354,28 +325,25 @@ it('can successful get wallet statement', function () {
         Tembo::SANDBOX_BASE_URL.'/tembo/v1/wallet/statement' => Http::response($stub, 200),
     ]);
 
-    $tembo = new Tembo;
-
-    $data = $tembo->walletStatement([
+    $data = TemboFacade::walletStatement([
         'accountNo' => '015A8XX787600',
         'startDate' => '2024-12-12',
         'endDate' => '2024-12-13',
     ]);
 
     $this->assertEquals($data, $stub);
-});
+})->group('facade');
 
 it('can successful validate get wallet statement', function (array $data, string $validation) {
-    $tembo = new Tembo;
 
-    expect(fn () => $tembo->walletStatement($data))->toThrow(new Exception($validation));
+    expect(fn () => TemboFacade::walletStatement($data))->toThrow(new Exception($validation));
 
 })->with([
     ['data' => [], 'validation' => '["The account no field is required.","The start date field is required.","The end date field is required."]'],
     ['data' => ['accountNo' => '015A8XX787600'], 'validation' => '["The start date field is required.","The end date field is required."]'],
     ['data' => ['startDate' => '2024-12-12', 'endDate' => '2024-12-13'], 'validation' => '["The account no field is required."]'],
     ['data' => ['accountNo' => '015A8XX787600', 'startDate' => '2024-12-12'], 'validation' => '["The end date field is required."]'],
-]);
+])->group('facade');
 
 it('can throw error during get wallet statement', function (string $stubFile, string $exceptionClass, int $statusCode) {
 
@@ -389,9 +357,7 @@ it('can throw error during get wallet statement', function (string $stubFile, st
         Tembo::SANDBOX_BASE_URL.'/tembo/v1/wallet/statement' => Http::response($stub, $statusCode),
     ]);
 
-    $tembo = new Tembo;
-
-    expect(fn () => $tembo->walletStatement([
+    expect(fn () => TemboFacade::walletStatement([
         'accountNo' => '015A8XX787600',
         'startDate' => '2024-12-12',
         'endDate' => '2024-12-13',
@@ -400,7 +366,7 @@ it('can throw error during get wallet statement', function (string $stubFile, st
 })->with([['get_wallet_statement_400.json', BadRequestException::class, 400],
     ['get_wallet_statement_404.json', NotFoundException::class, 404],
     ['get_wallet_statement_401.json', UnauthorizedException::class, 401],
-]);
+])->group('facade');
 
 it('can successful check wallet main balance', function () {
     $stub = json_decode(
@@ -413,12 +379,10 @@ it('can successful check wallet main balance', function () {
         Tembo::SANDBOX_BASE_URL.'/tembo/v1/wallet/main-balance' => Http::response($stub, 200),
     ]);
 
-    $tembo = new Tembo;
-
-    $data = $tembo->mainBalance();
+    $data = TemboFacade::mainBalance();
 
     $this->assertEquals($data, $stub);
-});
+})->group('facade');
 
 it('can throw error during check wallet main balance', function (string $stubFile, string $exceptionClass, int $statusCode) {
 
@@ -432,13 +396,11 @@ it('can throw error during check wallet main balance', function (string $stubFil
         Tembo::SANDBOX_BASE_URL.'/tembo/v1/wallet/balance' => Http::response($stub, $statusCode),
     ]);
 
-    $tembo = new Tembo;
-
-    expect(fn () => $tembo->mainBalance())->toThrow($exceptionClass);
+    expect(fn () => TemboFacade::mainBalance())->toThrow($exceptionClass);
 
 })->with([
     ['wallet_main_balance_401.json', UnauthorizedException::class, 401],
-]);
+])->group('facade');
 
 it('can successful get wallet main statement', function () {
     $stub = json_decode(
@@ -451,24 +413,21 @@ it('can successful get wallet main statement', function () {
         Tembo::SANDBOX_BASE_URL.'/tembo/v1/wallet/main-statement' => Http::response($stub, 200),
     ]);
 
-    $tembo = new Tembo;
-
-    $data = $tembo->mainStatement([
+    $data = TemboFacade::mainStatement([
         'startDate' => '2024-12-12',
         'endDate' => '2024-12-13',
     ]);
 
     $this->assertEquals($data, $stub);
-});
+})->group('facade');
 
 it('can successful validate get wallet main statement', function (array $data, string $validation) {
-    $tembo = new Tembo;
 
-    expect(fn () => $tembo->mainStatement($data))->toThrow(new Exception($validation));
+    expect(fn () => TemboFacade::mainStatement($data))->toThrow(new Exception($validation));
 
 })->with([
     ['data' => [], 'validation' => '["The start date field is required.","The end date field is required."]'],
-]);
+])->group('facade');
 
 it('can throw error during get wallet main statement', function (string $stubFile, string $exceptionClass, int $statusCode) {
 
@@ -482,16 +441,14 @@ it('can throw error during get wallet main statement', function (string $stubFil
         Tembo::SANDBOX_BASE_URL.'/tembo/v1/wallet/main-statement' => Http::response($stub, $statusCode),
     ]);
 
-    $tembo = new Tembo;
-
-    expect(fn () => $tembo->mainStatement([
+    expect(fn () => TemboFacade::mainStatement([
         'startDate' => '2024-12-12',
         'endDate' => '2024-12-13',
     ]))->toThrow($exceptionClass);
 
 })->with([['get_wallet_main_statement_400.json', BadRequestException::class, 400],
     ['get_wallet_main_statement_401.json', UnauthorizedException::class, 401],
-]);
+])->group('facade');
 
 it('can successful get list of wallets', function () {
     $stub = json_decode(
@@ -504,12 +461,10 @@ it('can successful get list of wallets', function () {
         Tembo::SANDBOX_BASE_URL.'/tembo/v1/wallet' => Http::response($stub, 200),
     ]);
 
-    $tembo = new Tembo;
-
-    $data = $tembo->listWallets();
+    $data = TemboFacade::listWallets();
 
     $this->assertEquals($data, $stub);
-});
+})->group('facade');
 
 it('can throw error during get list of wallets', function (string $stubFile, string $exceptionClass, int $statusCode) {
 
@@ -523,10 +478,8 @@ it('can throw error during get list of wallets', function (string $stubFile, str
         Tembo::SANDBOX_BASE_URL.'/tembo/v1/wallet' => Http::response($stub, $statusCode),
     ]);
 
-    $tembo = new Tembo;
-
-    expect(fn () => $tembo->listWallets())->toThrow($exceptionClass);
+    expect(fn () => TemboFacade::listWallets())->toThrow($exceptionClass);
 
 })->with([
     ['get_wallets_401.json', UnauthorizedException::class, 401],
-]);
+])->group('facade');

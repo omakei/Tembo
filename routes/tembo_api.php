@@ -15,7 +15,7 @@ Route::post('/api/v1/merchant/callback', function (Request $request) {
         'message' => 'Tembo Merchant Callback',
     ]);
     // Validate the incoming request
-    $validator = Validator::make($request->all(), 
+    $validator = Validator::make($request->all(),
         [
             'accountNo' => ['required', 'string'],
             'payerName' => ['required', 'string'],
@@ -34,7 +34,7 @@ Route::post('/api/v1/merchant/callback', function (Request $request) {
             'clearedBalance' => ['required', 'numeric'],
             'bookedBalance' => ['required', 'numeric'],
         ]);
-        
+
     if ($validator->fails()) {
         return response()->json([
             'success' => false,

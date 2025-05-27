@@ -2,9 +2,4 @@
 
 namespace Omakei\Tembo\Exceptions;
 
-
-
-class NotFoundException extends BaseRequestException
-{
-
-}
+class NotFoundException extends BaseRequestException {}

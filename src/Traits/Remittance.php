@@ -4,12 +4,12 @@ namespace Omakei\Tembo\Traits;
 
 use Exception;
 use Illuminate\Http\Client\Response;
-use Omakei\Tembo\Exceptions\RateLimitException;
 use Omakei\Tembo\Exceptions\BadGatewayException;
 use Omakei\Tembo\Exceptions\BadRequestException;
 use Omakei\Tembo\Exceptions\ConflictException;
 use Omakei\Tembo\Exceptions\ForbiddenException;
 use Omakei\Tembo\Exceptions\NotFoundException;
+use Omakei\Tembo\Exceptions\RateLimitException;
 use Omakei\Tembo\Exceptions\UnauthorizedException;
 use Omakei\Tembo\Traits\Validation\RemittanceValidation;
 
@@ -103,11 +103,11 @@ trait Remittance
                     throw new Exception('There is a problem with payment processing server.');
                 }
 
-                if($response->notFound()) {
+                if ($response->notFound()) {
                     throw new NotFoundException($response);
                 }
 
-                if($response->status() === 502) {
+                if ($response->status() === 502) {
                     throw new BadGatewayException($response);
                 }
             });
@@ -122,35 +122,35 @@ trait Remittance
      *                       'partnerReference': string,
      *                       }
      * @return array {
-     *    'transactionId": string,
-     *    'paymentDate": date,
-     *    'senderCurrency": string,
-     *    'senderAmount": float,
-     *    'receiverCurrency": string,
-     *    'receiverAmount": float,
-     *    'exchangeRate": float,
-     *    'transactionFee": float,
-     *    'transactionAmount": float,
-     *    'transactionDate": date,
-     *    'receiverAccount": string,
-     *    'receiverChannel": string,
-     *    'institutionCode": string,
-     *    'partnerReference": string,
-     *    'institutionReference": string,
-     *    'status": string,
-     *    'statusCode": string,
-     *    'statusMessage": string,
-     *    'receiptNumber": string,
-     *    'createdAt": date,
-     *    'updatedAt": date,
-     *    'completedAt": date
-     * }| string | array {
-     *   'message': string,
-     *   'error': string,
-     *    'details': {
-     *       'field': string,
-     *       'message': string,}
-     * }
+     *               'transactionId": string,
+     *               'paymentDate": date,
+     *               'senderCurrency": string,
+     *               'senderAmount": float,
+     *               'receiverCurrency": string,
+     *               'receiverAmount": float,
+     *               'exchangeRate": float,
+     *               'transactionFee": float,
+     *               'transactionAmount": float,
+     *               'transactionDate": date,
+     *               'receiverAccount": string,
+     *               'receiverChannel": string,
+     *               'institutionCode": string,
+     *               'partnerReference": string,
+     *               'institutionReference": string,
+     *               'status": string,
+     *               'statusCode": string,
+     *               'statusMessage": string,
+     *               'receiptNumber": string,
+     *               'createdAt": date,
+     *               'updatedAt": date,
+     *               'completedAt": date
+     *               } | array {
+     *               'message': string,
+     *               'error': string,
+     *               'details': {
+     *               'field': string,
+     *               'message': string,}
+     *               }
      *
      * @throws Exception
      */
@@ -180,11 +180,11 @@ trait Remittance
                     throw new Exception('There is a problem with payment processing server.');
                 }
 
-                if($response->notFound()) {
+                if ($response->notFound()) {
                     throw new NotFoundException($response);
                 }
 
-                if($response->status() === 502) {
+                if ($response->status() === 502) {
                     throw new BadGatewayException($response);
                 }
             });

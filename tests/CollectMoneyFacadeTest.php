@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Http;
 use Omakei\Tembo\Exceptions\BadRequestException;
 use Omakei\Tembo\Exceptions\UnauthorizedException;
+use Omakei\Tembo\Facades\Tembo as TemboFacade;
 use Omakei\Tembo\Tembo;
 
 beforeEach(function () {
@@ -22,9 +23,7 @@ it('can successful send ussd push request', function () {
         Tembo::SANDBOX_BASE_URL.'/tembo/v1/collection' => Http::response($stub, 200),
     ]);
 
-    $tembo = new Tembo;
-
-    $data = $tembo->sendAUSSDPushRequest([
+    $data = TemboFacade::sendAUSSDPushRequest([
         'channel' => 'TZ-AIRTEL-C2B',
         'msisdn' => '255778342299',
         'amount' => 1000,
@@ -34,17 +33,15 @@ it('can successful send ussd push request', function () {
     ]);
 
     $this->assertEquals($data, $stub);
-});
+})->group('facade');
 
 it('can successful validate send ussd push request', function (array $data, string $validation) {
 
-    $tembo = new Tembo;
-
-    expect(fn () => $tembo->sendAUSSDPushRequest($data))->toThrow(new Exception($validation));
+    expect(fn () => TemboFacade::sendAUSSDPushRequest($data))->toThrow(new Exception($validation));
 
 })->with([
     ['data' => [], 'validation' => '["The channel field is required.","The amount field is required.","The msisdn field is required.","The narration field is required.","The transaction ref field is required.","The transaction date field is required."]'],
-]);
+])->group('facade');
 
 it('can throw error during send ussd push request', function (string $stubFile, string $exceptionClass, int $statusCode) {
 
@@ -58,9 +55,7 @@ it('can throw error during send ussd push request', function (string $stubFile, 
         Tembo::SANDBOX_BASE_URL.'/tembo/v1/collection' => Http::response($stub, $statusCode),
     ]);
 
-    $tembo = new Tembo;
-
-    expect(fn () => $tembo->sendAUSSDPushRequest([
+    expect(fn () => TemboFacade::sendAUSSDPushRequest([
         'channel' => 'TZ-AIRTEL-C2B',
         'msisdn' => '255778342299',
         'amount' => 1000,
@@ -70,7 +65,7 @@ it('can throw error during send ussd push request', function (string $stubFile, 
     ]))->toThrow($exceptionClass);
 
 })->with([['ussd_push_request_401.json', UnauthorizedException::class, 401],
-]);
+])->group('facade');
 
 it('can successful check collection balance', function () {
     $stub = json_decode(
@@ -83,12 +78,10 @@ it('can successful check collection balance', function () {
         Tembo::SANDBOX_BASE_URL.'/tembo/v1/wallet/collection-balance' => Http::response($stub, 200),
     ]);
 
-    $tembo = new Tembo;
-
-    $data = $tembo->collectionBalance();
+    $data = TemboFacade::collectionBalance();
 
     $this->assertEquals($data, $stub);
-});
+})->group('facade');
 
 it('can throw error during check collection balance', function (string $stubFile, string $exceptionClass, int $statusCode) {
 
@@ -102,12 +95,10 @@ it('can throw error during check collection balance', function (string $stubFile
         Tembo::SANDBOX_BASE_URL.'/tembo/v1/wallet/collection-balance' => Http::response($stub, $statusCode),
     ]);
 
-    $tembo = new Tembo;
-
-    expect(fn () => $tembo->collectionBalance())->toThrow($exceptionClass);
+    expect(fn () => TemboFacade::collectionBalance())->toThrow($exceptionClass);
 
 })->with([['collection_balance_401.json', UnauthorizedException::class, 401],
-]);
+])->group('facade');
 
 it('can successful get collection statement', function () {
     $stub = json_decode(
@@ -120,25 +111,21 @@ it('can successful get collection statement', function () {
         Tembo::SANDBOX_BASE_URL.'/tembo/v1/wallet/collection-statement' => Http::response($stub, 200),
     ]);
 
-    $tembo = new Tembo;
-
-    $data = $tembo->collectionStatement([
+    $data = TemboFacade::collectionStatement([
         'startDate' => '2023-01-01',
         'endDate' => '2023-01-31',
     ]);
 
     $this->assertEquals($data, $stub);
-});
+})->group('facade');
 
 it('can successful validate get collection statement', function (array $data, string $validation) {
 
-    $tembo = new Tembo;
-
-    expect(fn () => $tembo->collectionStatement($data))->toThrow(new Exception($validation));
+    expect(fn () => TemboFacade::collectionStatement($data))->toThrow(new Exception($validation));
 
 })->with([
     ['data' => [], 'validation' => '["The start date field is required.","The end date field is required."]'],
-]);
+])->group('facade');
 
 it('can throw error during get collection statement', function (string $stubFile, string $exceptionClass, int $statusCode) {
 
@@ -152,16 +139,14 @@ it('can throw error during get collection statement', function (string $stubFile
         Tembo::SANDBOX_BASE_URL.'/tembo/v1/wallet/collection-statement' => Http::response($stub, $statusCode),
     ]);
 
-    $tembo = new Tembo;
-
-    expect(fn () => $tembo->collectionStatement([
+    expect(fn () => TemboFacade::collectionStatement([
         'startDate' => '2023-01-01',
         'endDate' => '2023-01-31',
     ]))->toThrow($exceptionClass);
 
 })->with([['collection_statement_401.json', UnauthorizedException::class, 401],
     ['collection_statement_400.json', BadRequestException::class, 400],
-]);
+])->group('facade');
 
 it('can successful get collection payment status', function () {
     $stub = json_decode(
@@ -174,25 +159,21 @@ it('can successful get collection payment status', function () {
         Tembo::SANDBOX_BASE_URL.'/tembo/v1/collection/status' => Http::response($stub, 200),
     ]);
 
-    $tembo = new Tembo;
-
-    $data = $tembo->collectionPaymentStatus([
+    $data = TemboFacade::collectionPaymentStatus([
         'transactionRef' => 'Hyu8373HmsI',
         'transactionId' => 'X50jcLDcU',
     ]);
 
     $this->assertEquals($data, $stub);
-});
+})->group('facade');
 
 it('can successful validate get collection payment status', function (array $data, string $validation) {
 
-    $tembo = new Tembo;
-
-    expect(fn () => $tembo->collectionPaymentStatus($data))->toThrow(new Exception($validation));
+    expect(fn () => TemboFacade::collectionPaymentStatus($data))->toThrow(new Exception($validation));
 
 })->with([
     ['data' => [], 'validation' => '["The transaction id field is required.","The transaction ref field is required."]'],
-]);
+])->group('facade');
 
 it('can throw error during get collection payment status', function (string $stubFile, string $exceptionClass, int $statusCode) {
 
@@ -206,12 +187,10 @@ it('can throw error during get collection payment status', function (string $stu
         Tembo::SANDBOX_BASE_URL.'/tembo/v1/collection/status' => Http::response($stub, $statusCode),
     ]);
 
-    $tembo = new Tembo;
-
-    expect(fn () => $tembo->collectionPaymentStatus([
+    expect(fn () => TemboFacade::collectionPaymentStatus([
         'transactionRef' => 'Hyu8373HmsI',
         'transactionId' => 'X50jcLDcU',
     ]))->toThrow($exceptionClass);
 
 })->with([['collection_status_401.json', UnauthorizedException::class, 401],
-]);
+])->group('facade');

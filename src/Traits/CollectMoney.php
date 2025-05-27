@@ -33,7 +33,7 @@ trait CollectMoney
      *               'transactionRef': string,
      *               'transactionId': string,
      *
-     * }| string | {
+     * } | {
      *
      *   'reason': string,
      *   'statusCode': int,
@@ -68,11 +68,11 @@ trait CollectMoney
                     throw new Exception('There is a problem with payment processing server.');
                 }
 
-                if($response->notFound()) {
+                if ($response->notFound()) {
                     throw new NotFoundException($response);
                 }
 
-                if($response->status() === 502) {
+                if ($response->status() === 502) {
                     throw new BadGatewayException($response);
                 }
 
@@ -90,7 +90,7 @@ trait CollectMoney
      *               'transactionRef': string,
      *               'transactionId': string,
      *
-     * }| string | {
+     * } | {
      *    'availableBalance': float,
      *    'currentBalance':float,
      *    'accountNo':string,
@@ -122,11 +122,11 @@ trait CollectMoney
                     throw new Exception('There is a problem with payment processing server.');
                 }
 
-                if($response->notFound()) {
+                if ($response->notFound()) {
                     throw new NotFoundException($response);
                 }
 
-                if($response->status() === 502) {
+                if ($response->status() === 502) {
                     throw new BadGatewayException($response);
                 }
 
@@ -149,7 +149,7 @@ trait CollectMoney
      *               'details': {
      *               'walletId': string,
      *               'amount': string,
-     *               }| string |{
+     *               } |{
      *               {
      *               'accountNo': string,
      *               'debitOrCredit': string,
@@ -187,11 +187,11 @@ trait CollectMoney
                     throw new Exception('There is a problem with payment processing server.');
                 }
 
-                if($response->notFound()) {
+                if ($response->notFound()) {
                     throw new NotFoundException($response);
                 }
 
-                if($response->status() === 502) {
+                if ($response->status() === 502) {
                     throw new BadGatewayException($response);
                 }
 
@@ -213,7 +213,7 @@ trait CollectMoney
      *               'transactionId': string,
      *               'transactionRef': string,
      *
-     * }| string | {
+     * } | {
      *
      *   'reason': string,
      *   'statusCode': int,
@@ -232,7 +232,7 @@ trait CollectMoney
 
         $response = $this->sendRequestUsingSecretKey('post', '/tembo/v1/collection/status', $data)
             ->onError(function (Response $response) {
-                 if ($response->badRequest()) {
+                if ($response->badRequest()) {
                     throw new BadRequestException($response);
                 }
 
@@ -248,14 +248,14 @@ trait CollectMoney
                     throw new Exception('There is a problem with payment processing server.');
                 }
 
-                if($response->notFound()) {
+                if ($response->notFound()) {
                     throw new NotFoundException($response);
                 }
 
-                if($response->status() === 502) {
+                if ($response->status() === 502) {
                     throw new BadGatewayException($response);
                 }
-                
+
             });
 
         return $response->json();

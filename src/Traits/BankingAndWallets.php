@@ -77,15 +77,14 @@ trait BankingAndWallets
                     throw new ConflictException($response);
                 }
 
-                if($response->notFound()) {
+                if ($response->notFound()) {
                     throw new NotFoundException($response);
                 }
 
-                if($response->status() === 502) {
+                if ($response->status() === 502) {
                     throw new BadGatewayException($response);
                 }
 
-                
                 if ($response->serverError()) {
                     throw new Exception('There is a problem with payment processing server.');
                 }
@@ -112,7 +111,7 @@ trait BankingAndWallets
      *               'details': {
      *               'walletId': string,
      *               'amount': string,
-     *               }| string |
+     *               } |
      *               array{
      *               'paymentRef': string,
      *               'transactionId': string,
@@ -143,11 +142,11 @@ trait BankingAndWallets
                     throw new Exception('There is a problem with payment processing server.');
                 }
 
-                if($response->notFound()) {
+                if ($response->notFound()) {
                     throw new NotFoundException($response);
                 }
 
-                if($response->status() === 502) {
+                if ($response->status() === 502) {
                     throw new BadGatewayException($response);
                 }
 
@@ -173,7 +172,7 @@ trait BankingAndWallets
      *               'details': {
      *               'walletId': string,
      *               'amount': string,
-     *               }| string |
+     *               } |
      *               array{
      *               'paymentRef': string,
      *               'transactionId': string,
@@ -204,11 +203,11 @@ trait BankingAndWallets
                     throw new Exception('There is a problem with payment processing server.');
                 }
 
-                if($response->notFound()) {
+                if ($response->notFound()) {
                     throw new NotFoundException($response);
                 }
 
-                if($response->status() === 502) {
+                if ($response->status() === 502) {
                     throw new BadGatewayException($response);
                 }
 
@@ -235,7 +234,7 @@ trait BankingAndWallets
      *               'details': {
      *               'walletId': string,
      *               'amount': string,
-     *               }| string | array{
+     *               } | array{
      *               'paymentRef': string,
      *               'transactionId': string,
      *               'transactionRef': string,
@@ -266,11 +265,11 @@ trait BankingAndWallets
                     throw new Exception('There is a problem with payment processing server.');
                 }
 
-                if($response->notFound()) {
+                if ($response->notFound()) {
                     throw new NotFoundException($response);
                 }
 
-                if($response->status() === 502) {
+                if ($response->status() === 502) {
                     throw new BadGatewayException($response);
                 }
 
@@ -292,7 +291,7 @@ trait BankingAndWallets
      *               'details': {
      *               'walletId': string,
      *               'amount': string,
-     *               }| string | array {
+     *               } | array {
      *               'availableBalance': float,
      *               'currentBalance':float,
      *               'accountNo':string,
@@ -308,7 +307,7 @@ trait BankingAndWallets
 
         $response = $this->sendRequestUsingSecretKey('post', '/tembo/v1/wallet/balance', $data)
             ->onError(function (Response $response) {
-                 if ($response->badRequest()) {
+                if ($response->badRequest()) {
                     throw new BadRequestException($response);
                 }
 
@@ -324,11 +323,11 @@ trait BankingAndWallets
                     throw new Exception('There is a problem with payment processing server.');
                 }
 
-                if($response->notFound()) {
+                if ($response->notFound()) {
                     throw new NotFoundException($response);
                 }
 
-                if($response->status() === 502) {
+                if ($response->status() === 502) {
                     throw new BadGatewayException($response);
                 }
 
@@ -352,7 +351,7 @@ trait BankingAndWallets
      *               'details': {
      *               'walletId': string,
      *               'amount': string,
-     *               }| string | array{
+     *               } | array {
      *               {
      *               'accountNo': string,
      *               'debitOrCredit': string,
@@ -390,11 +389,11 @@ trait BankingAndWallets
                     throw new Exception('There is a problem with payment processing server.');
                 }
 
-                if($response->notFound()) {
+                if ($response->notFound()) {
                     throw new NotFoundException($response);
                 }
 
-                if($response->status() === 502) {
+                if ($response->status() === 502) {
                     throw new BadGatewayException($response);
                 }
 
@@ -413,7 +412,7 @@ trait BankingAndWallets
      *               'details': {
      *               'walletId': string,
      *               'amount': string,
-     *               }| string | array{
+     *               } | array{
      *               'availableBalance': float,
      *               'currentBalance':float,
      *               'accountNo':string,
@@ -429,7 +428,7 @@ trait BankingAndWallets
 
         $response = $this->sendRequestUsingSecretKey('post', '/tembo/v1/wallet/main-balance', [])
             ->onError(function (Response $response) {
-                 if ($response->badRequest()) {
+                if ($response->badRequest()) {
                     throw new BadRequestException($response);
                 }
 
@@ -445,11 +444,11 @@ trait BankingAndWallets
                     throw new Exception('There is a problem with payment processing server.');
                 }
 
-                if($response->notFound()) {
+                if ($response->notFound()) {
                     throw new NotFoundException($response);
                 }
 
-                if($response->status() === 502) {
+                if ($response->status() === 502) {
                     throw new BadGatewayException($response);
                 }
 
@@ -472,7 +471,7 @@ trait BankingAndWallets
      *               'details': {
      *               'walletId': string,
      *               'amount': string,
-     *               }| string | array{
+     *               } | array{
      *               {
      *               'accountNo': string,
      *               'debitOrCredit': string,
@@ -494,7 +493,7 @@ trait BankingAndWallets
 
         $response = $this->sendRequestUsingSecretKey('post', '/tembo/v1/wallet/main-statement', $data)
             ->onError(function (Response $response) {
-                 if ($response->badRequest()) {
+                if ($response->badRequest()) {
                     throw new BadRequestException($response);
                 }
 
@@ -510,11 +509,11 @@ trait BankingAndWallets
                     throw new Exception('There is a problem with payment processing server.');
                 }
 
-                if($response->notFound()) {
+                if ($response->notFound()) {
                     throw new NotFoundException($response);
                 }
 
-                if($response->status() === 502) {
+                if ($response->status() === 502) {
                     throw new BadGatewayException($response);
                 }
 
@@ -533,7 +532,7 @@ trait BankingAndWallets
      *               'details': {
      *               'walletId': string,
      *               'amount': string,
-     *               }| string | array{
+     *               } | array{
      *               'accountNo':string,
      *               }
      *
@@ -561,14 +560,14 @@ trait BankingAndWallets
                     throw new Exception('There is a problem with payment processing server.');
                 }
 
-                if($response->notFound()) {
+                if ($response->notFound()) {
                     throw new NotFoundException($response);
                 }
 
-                if($response->status() === 502) {
+                if ($response->status() === 502) {
                     throw new BadGatewayException($response);
                 }
-                
+
             });
 
         return $response->json();

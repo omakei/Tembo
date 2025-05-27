@@ -1,21 +1,15 @@
 <?php
 
 use Illuminate\Support\Facades\Event;
-use Omakei\Tembo\Tembo;
-use Illuminate\Support\Facades\Http;
 use Omakei\Tembo\Events\RemittanceCallback;
 use Omakei\Tembo\Events\TemboCallback;
 use Omakei\Tembo\Events\UtilityPaymentsCallback;
 use Omakei\Tembo\Events\WalletToMobileCallback;
-use Omakei\Tembo\Exceptions\BadRequestException;
-use Omakei\Tembo\Exceptions\ConflictException;
-use Omakei\Tembo\Exceptions\NotFoundException;
-use Omakei\Tembo\Exceptions\UnauthorizedException;
 
 beforeEach(function () {
     config(['tembo.accountId' => '123456789']);
     config(['tembo.secretKey' => '123456789']);
-    
+
 });
 
 it('merchant account callback can successful be executed', function () {
@@ -44,21 +38,21 @@ it('merchant account callback can successful be executed', function () {
         'bookedBalance' => 6000.30,
     ];
 
-    $concatenatedString = $timestamp .
-        $payload['accountNo'] .
-        $payload['id'] .
-        $payload['transactionId'] .
-        $payload['reference'] .
-        $payload['transactionType'] .
-        $payload['channel'] .
-        $payload['transactionDate'] .
-        $payload['postingDate'] .
-        $payload['valueDate'] .
-        $payload['narration'] .
-        $payload['currency'] .
-        intval($payload['amountCredit']) .
-        intval($payload['amountDebit']) .
-        intval($payload['clearedBalance']) .
+    $concatenatedString = $timestamp.
+        $payload['accountNo'].
+        $payload['id'].
+        $payload['transactionId'].
+        $payload['reference'].
+        $payload['transactionType'].
+        $payload['channel'].
+        $payload['transactionDate'].
+        $payload['postingDate'].
+        $payload['valueDate'].
+        $payload['narration'].
+        $payload['currency'].
+        intval($payload['amountCredit']).
+        intval($payload['amountDebit']).
+        intval($payload['clearedBalance']).
         intval($payload['bookedBalance']);
 
     $computedSignature = base64_encode(hash_hmac('sha256', $concatenatedString, $secretRaw, true));
@@ -66,14 +60,14 @@ it('merchant account callback can successful be executed', function () {
         'content-type' => 'application/json',
         'x-request-id' => vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex(random_bytes(16)), 4)),
         'x-request-timestamp' => $timestamp,
-        'x-request-signature' => $computedSignature
+        'x-request-signature' => $computedSignature,
     ])->assertStatus(200)->assertJson([
         'success' => true,
         'message' => 'Callback received successfully',
     ]);
 
     Event::assertDispatched(TemboCallback::class);
-   
+
 });
 
 it('can successful validate merchant account callback ', function () {
@@ -82,7 +76,7 @@ it('can successful validate merchant account callback ', function () {
         'content-type' => 'application/json',
         'x-request-id' => vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex(random_bytes(16)), 4)),
         'x-request-timestamp' => '202310261200',
-        'x-request-signature' => 'Y2FsbGJhY2stc2lnbmF0dXJl'
+        'x-request-signature' => 'Y2FsbGJhY2stc2lnbmF0dXJl',
     ])->assertStatus(422);
 });
 
@@ -90,9 +84,9 @@ it('pay to mobile callback can successful be executed', function () {
     Event::fake();
 
     $this->postJson('/api/v1/wallet-to-mobile/callback', [
-        "statusCode" => "PAYMENT_ACCEPTED",
-        "transactionRef" => "20f807fe-3ee8-4525-8aff-ccb95de38250",
-        "transactionId" => "X50jcLD-U"
+        'statusCode' => 'PAYMENT_ACCEPTED',
+        'transactionRef' => '20f807fe-3ee8-4525-8aff-ccb95de38250',
+        'transactionId' => 'X50jcLD-U',
     ], [
         'content-type' => 'application/json',
         'x-request-id' => vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex(random_bytes(16)), 4)),
@@ -102,7 +96,7 @@ it('pay to mobile callback can successful be executed', function () {
     ]);
 
     Event::assertDispatched(WalletToMobileCallback::class);
-   
+
 });
 
 it('can successful validate pay to mobile callback ', function () {
@@ -117,9 +111,9 @@ it('utility payment callback can successful be executed', function () {
     Event::fake();
 
     $this->postJson('/api/v1/utility-payment/callback', [
-        "statusCode" => "PAYMENT_ACCEPTED",
-        "transactionRef" => "20f807fe-3ee8-4525-8aff-ccb95de38250",
-        "transactionId" => "X50jcLD-U"
+        'statusCode' => 'PAYMENT_ACCEPTED',
+        'transactionRef' => '20f807fe-3ee8-4525-8aff-ccb95de38250',
+        'transactionId' => 'X50jcLD-U',
     ], [
         'content-type' => 'application/json',
         'x-request-id' => vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex(random_bytes(16)), 4)),
@@ -129,7 +123,7 @@ it('utility payment callback can successful be executed', function () {
     ]);
 
     Event::assertDispatched(UtilityPaymentsCallback::class);
-   
+
 });
 
 it('can successful validate utility payment callback ', function () {
@@ -144,28 +138,28 @@ it('remittance callback can successful be executed', function () {
     Event::fake();
 
     $this->postJson('/api/v1/remittance/callback', [
-            "transactionId" => "550e8400e29b41d4a716446655440000",
-            "paymentDate" => "2025-02-27T10:56:00Z",
-            "senderCurrency" => "USD",
-            "senderAmount" => 100.00,
-            "receiverCurrency" => "TZS",
-            "receiverAmount" => 250000.00,
-            "exchangeRate" => 2500.00,
-            "transactionFee" => 2500,
-            "transactionAmount" => 252500.00,
-            "transactionDate" => "2025-02-18T10:00:00Z",
-            "receiverAccount" => "255745908755",
-            "receiverChannel" => "MOBILE",
-            "institutionCode" => "VODACOM",
-            "partnerReference" => "HSC8474837-VS83",
-            "institutionReference" => "58577.55885.93993",
-            "status" => "COMPLETED",
-            "statusCode" => "PAYMENT_SUCCESS",
-            "statusMessage" => "Success",
-            "receiptNumber" => "RM48474558557",
-            "createdAt" => "2025-02-18T10:05:00Z",
-            "updatedAt" => "2025-02-18T10:05:00Z",
-            "completedAt" => "2025-02-18T10:05:00Z"
+        'transactionId' => '550e8400e29b41d4a716446655440000',
+        'paymentDate' => '2025-02-27T10:56:00Z',
+        'senderCurrency' => 'USD',
+        'senderAmount' => 100.00,
+        'receiverCurrency' => 'TZS',
+        'receiverAmount' => 250000.00,
+        'exchangeRate' => 2500.00,
+        'transactionFee' => 2500,
+        'transactionAmount' => 252500.00,
+        'transactionDate' => '2025-02-18T10:00:00Z',
+        'receiverAccount' => '255745908755',
+        'receiverChannel' => 'MOBILE',
+        'institutionCode' => 'VODACOM',
+        'partnerReference' => 'HSC8474837-VS83',
+        'institutionReference' => '58577.55885.93993',
+        'status' => 'COMPLETED',
+        'statusCode' => 'PAYMENT_SUCCESS',
+        'statusMessage' => 'Success',
+        'receiptNumber' => 'RM48474558557',
+        'createdAt' => '2025-02-18T10:05:00Z',
+        'updatedAt' => '2025-02-18T10:05:00Z',
+        'completedAt' => '2025-02-18T10:05:00Z',
     ], [
         'content-type' => 'application/json',
         'x-request-id' => vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex(random_bytes(16)), 4)),
@@ -175,7 +169,7 @@ it('remittance callback can successful be executed', function () {
     ]);
 
     Event::assertDispatched(RemittanceCallback::class);
-   
+
 });
 
 it('can successful validate remittance callback ', function () {

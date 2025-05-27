@@ -15,15 +15,11 @@ class Tembo
         Traits\MerchantVirtualAccounts,
         Traits\Remittance;
 
-    const SANDBOX_AUTH_BASE_URL = 'https://authenticator-sandbox.azampay.co.tz';
-
     const SANDBOX_BASE_URL = 'https://sandbox.temboplus.com';
 
-    const BASE_URL = 'https://sandbox.temboplus.com';
-
+    const BASE_URL = 'https:/temboplus.com';
 
     private string $baseUrl;
-
 
     /**
      * @throws Exception
