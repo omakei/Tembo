@@ -2,13 +2,14 @@
     <img src="/art/logo-tembo.png" width="300" title="Tembo Logo" alt="Tembo Logo">
 </p>
 <div align="center"><h1>Laravel Tembo</h1>
+    
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/omakei/tembo.svg?style=flat-square)](https://packagist.org/packages/omakei/tembo)
 [![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/omakei/tembo/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/omakei/tembo/actions?query=workflow%3Arun-tests+branch%3Amain)
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/omakei/tembo/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/omakei/tembo/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/omakei/tembo.svg?style=flat-square)](https://packagist.org/packages/omakei/tembo)
 
-This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
-
+A package to simplify integration between Laravel web apps with Tembo.
+</div>
 
 ## Installation
 
@@ -28,14 +29,49 @@ This is the contents of the published config file:
 
 ```php
 return [
+    /*
+    |--------------------------------------------------------------------------
+    | Tembo Account ID for (Banking & Wallets, Collect Money, Make Payment) API's
+    |--------------------------------------------------------------------------
+    |
+    | This value is the account ID of your application as provided by Tembo.
+    |
+    */
+    'accountId' => env('TEMBO_ACCOUNT_ID', 'Tembo'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Tembo Secret Key for (Banking & Wallets, Collect Money, Make Payment) API's
+    |--------------------------------------------------------------------------
+    |
+    | This value is the secret key of your application as provided by Tembo.
+    |
+    */
+    'secretKey' => env('TEMBO_SECRET_KEY', 'Tembo'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Tembo Token for (Merchant Virtual Accounts, eKYC Services, Remittance Services) API's
+    |--------------------------------------------------------------------------
+    |
+    | This value is the Bearer token of your application as provided by Tembo.
+    |
+    */
+    'token' => env('TEMBO_TOKEN', 'Bearer Tembo Token'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Tembo Environment
+    |--------------------------------------------------------------------------
+    |
+    | This value is the environment of your application as registered on Tembo.
+    |
+    */
+    'environment' => env('TEMBO_ENVIRONMENT', 'sandbox'),
 ];
 ```
 
-Optionally, you can publish the views using
 
-```bash
-php artisan vendor:publish --tag="tembo-views"
-```
 
 ## Usage
 ## Merchant Virtual Accounts
